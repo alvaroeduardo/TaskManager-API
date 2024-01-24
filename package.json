@@ -1,0 +1,28 @@
+{
+  "name": "taskmanager-api",
+  "version": "1.0.0",
+  "description": "O TaskManager API é uma aplicação back-end desenvolvida em TypeScript, que fornece uma API RESTful para gerenciamento eficiente de tarefas.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/app.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alvaroeduardo/TaskManager-API.git"
+  },
+  "author": "Álvaro Eduardo Silva",
+  "license": "CC BY-NC-ND 1.0",
+  "bugs": {
+    "url": "https://github.com/alvaroeduardo/TaskManager-API/issues"
+  },
+  "homepage": "https://github.com/alvaroeduardo/TaskManager-API#readme",
+  "dependencies": {
+    "fastify": "^4.25.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.6",
+    "prisma": "^5.8.1",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  }
+}
