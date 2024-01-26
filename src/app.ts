@@ -1,10 +1,12 @@
+import 'dotenv/config'
 import fastify from "fastify"
+import { crudUsers } from './routes/crud-users'
+import { authentication } from './routes/authentication'
 
 const app = fastify()
 
-app.get('/', () => {
-    return "hello world"
-})
+app.register(crudUsers)
+app.register(authentication)
 
 app.listen({
     port: 3333,
