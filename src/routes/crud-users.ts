@@ -2,22 +2,20 @@ import { FastifyInstance } from "fastify";
 import { prisma } from "../lib/prisma";
 import { z } from "zod";
 import { encryptPassword } from "../lib/bcrypt";
+import { authenticateJWT } from "../middlwares/auth";
 
 export async function crudUsers(app: FastifyInstance) {
-    app.get('/users', async () => ({
-        users: await prisma.user.findMany()
-    }));
 
-    app.get('/users/:userId', async (req, res) => {
-        const paramsSchema = z.object({
-            userId: z.string().uuid()
-        });
-
-        const { userId } = paramsSchema.parse(req.params);
+    app.get('/users/perfil', { preHandler: authenticateJWT }, async (req, res) => {
+        const userId = (req as any).userId;
 
         try {
             const user = await prisma.user.findUnique({
                 where: { id: userId }
+            });
+
+            if (user === null) return res.status(404).send({
+                mensagem: "Não foi localizado nenhum usuário com esse ID."
             });
 
             return res.status(200).send({ user });
@@ -37,29 +35,28 @@ export async function crudUsers(app: FastifyInstance) {
         const { name, password } = bodySchema.parse(req.body);
 
         try {
-            await prisma.user.findMany({
+            const existingUser = await prisma.user.findFirst({
                 where: { name }
-            }).then(() => {
+            })
 
-                return res.status(401).send({
-                    mensagem: "Usuário já cadastrado com esse nome."
-                });
-
-            }).catch(async () => {
-                const encriptedPassword = await encryptPassword(password);
-
-                const user = await prisma.user.create({
-                    data: {
-                        name,
-                        password: encriptedPassword
-                    }
-                });
-
-                return res.status(201).send({
-                    mensagem: "Usuário cadastrado com sucesso.",
-                    user
-                });
+            if (existingUser) return res.status(401).send({
+                mensagem: "Usuário já cadastrado com esse nome."
             });
+
+            const encriptedPassword = await encryptPassword(password);
+
+            const user = await prisma.user.create({
+                data: {
+                    name,
+                    password: encriptedPassword
+                }
+            });
+
+            return res.status(201).send({
+                mensagem: "Usuário cadastrado com sucesso.",
+                user
+            });
+
         } catch (error) {
 
             return res.status(400).send({
@@ -68,16 +65,12 @@ export async function crudUsers(app: FastifyInstance) {
         }
     });
 
-    app.put('/users/:userId', async (req, res) => {
-        const paramsSchema = z.object({
-            userId: z.string().uuid()
-        });
-
-        const { userId } = paramsSchema.parse(req.params);
+    app.put('/users', { preHandler: authenticateJWT }, async (req, res) => {
+        const userId = (req as any).userId;
 
         const bodySchema = z.object({
-            name: z.string(),
-            password: z.string()
+            name: z.string().optional(),
+            password: z.string().optional()
         });
 
         const { name, password } = bodySchema.parse(req.body);
@@ -87,7 +80,7 @@ export async function crudUsers(app: FastifyInstance) {
                 where: { id: userId }
             });
 
-            if(!user) return res.status(404).send({
+            if (!user) return res.status(404).send({
                 mensagem: "Usuário não foi encontrado."
             });
 
@@ -111,12 +104,8 @@ export async function crudUsers(app: FastifyInstance) {
         }
     });
 
-    app.delete('/users/:idUser', async (req, res) => {
-        const paramsSchema = z.object({
-            userId: z.string().uuid()
-        });
-
-        const { userId } = paramsSchema.parse(req.params);
+    app.delete('/users', { preHandler: authenticateJWT }, async (req, res) => {
+        const userId = (req as any).userId;
 
         try {
             const user = await prisma.user.findUnique({

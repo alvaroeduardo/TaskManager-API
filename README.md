@@ -18,50 +18,50 @@ O TaskManager API é uma aplicação back-end desenvolvida em TypeScript, que fo
 - Node.js
 
 ### Documentação
-A documentação da API, incluindo detalhes sobre endpoints, parâmetros e exemplos de requisições, pode ser encontrada na [inserir link da documentação aqui].
+A documentação da API, incluindo detalhes sobre endpoints, parâmetros e exemplos de requisições, pode ser encontrada na [[aqui]](https://documenter.getpostman.com/view/21449018/2s9YysENUz).
 
 # Requisitos
 ## Requisitos Funcionais
 
-- [ ] **Criação de Tarefas**
+- [X] **Criação de Tarefas**
    - Os usuários devem poder criar novas tarefas fornecendo informações como título, descrição, data de vencimento, e prioridade.
 
-- [ ] **Atualização de Tarefas**
+- [X] **Atualização de Tarefas**
    - As tarefas existentes podem ser atualizadas, permitindo aos usuários modificar título, descrição, data de vencimento e prioridade.
 
-- [ ] **Exclusão de Tarefas**
+- [X] **Exclusão de Tarefas**
    - Os usuários devem ser capazes de excluir tarefas que não são mais necessárias.
 
-- [ ] **Listagem de Tarefas**
+- [X] **Listagem de Tarefas**
    - A API deve oferecer endpoints para listar todas as tarefas e também permitir filtragem com base em parâmetros como prioridade, data de vencimento, etc.
 
 ## Requisitos Não Funcionais
 
-- [ ] **Persistência de Dados**
+- [X] **Persistência de Dados**
    - Utilizar um banco de dados relacional para armazenar as informações das tarefas de forma segura e duradoura.
 
-- [ ] **Linguagem de Programação**
+- [X] **Linguagem de Programação**
    - Desenvolver a API utilizando TypeScript para garantir um código mais robusto e manutenível.
 
-- [ ] **Segurança e Autenticação**
+- [X] **Segurança e Autenticação**
    - Implementar um sistema de autenticação para proteger as operações da API, permitindo apenas acesso autorizado. Pode ser utilizado OAuth, JWT ou outra solução segura.
 
-- [ ] **Documentação**
+- [X] **Documentação**
    - Criar documentação clara e abrangente para a API, utilizando ferramentas como Swagger ou API Blueprint.
 
 ## Regras de Negócios
 
-- [ ] **Prioridades de Tarefas**
+- [X] **Prioridades de Tarefas**
    - As prioridades das tarefas devem ser definidas como "Baixa", "Média" e "Alta".
 
-- [ ] **Datas de Vencimento**
+- [X] **Datas de Vencimento**
    - Todas as tarefas devem ter uma data de vencimento associada.
 
-- [ ] **Restrições de Acesso**
+- [X] **Restrições de Acesso**
    - Apenas usuários autenticados podem criar, atualizar, excluir e visualizar tarefas.
 
-- [ ] **Validações de Dados**
+- [X] **Validações de Dados**
    - Realizar validações nos dados fornecidos pelos usuários para garantir consistência e integridade das informações armazenadas.
 
-- [ ] **Tratamento de Erros**
+- [X] **Tratamento de Erros**
    - Implementar um sistema de tratamento de erros eficiente, fornecendo mensagens claras e status HTTP apropriados em caso de falhas nas operações.
